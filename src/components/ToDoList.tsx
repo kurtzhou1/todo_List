@@ -18,7 +18,7 @@ const ToDoList =()=> {
   return (
     <>
     <input value={list} onChange={e=>setList(e.target.value)}/>
-    <button type='button' onClick={addTodoList}>新增代辦</button>
+    <button type='button' onClick={addTodoList}>新增類別</button>
     <ul>{toDoList.map((item:string)=><li>{item}</li>)}</ul>
     </>
   )
