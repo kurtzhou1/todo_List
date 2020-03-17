@@ -1,19 +1,29 @@
-import {ADD_TODOLIST,REMOVE_TODOLIST} from '../constants'
+import {CHANGE_TEXT,ADD_TODOLIST,REMOVE_TODOLIST} from '../constants'
+import {IState} from '../common/lib'
 
-interface IState {
-    toDoList:string[]
-}
 
 export const initState:IState ={
-    toDoList: [],
+    todos:[
+        {no: 0 ,
+        toDoList: '',
+        done: false}
+    ],
+    input:{
+        text:''
+    }
+    
 }
 
 export const reducer =(state=initState,action:any):IState =>{
     switch(action.type){
         case ADD_TODOLIST:
-            const tempTodo = state.toDoList.map(item=>item)
-            tempTodo.push(action.payload.list)
-            return {...state,  toDoList: tempTodo} 
+            const tempTodo = state.todos.map(item=>item)
+            console.log('tempTodo=>>>',tempTodo)
+            const todoLength = tempTodo.length
+            tempTodo.push({no:todoLength,toDoList:action.payload.todo,done:false})
+            return {...state,  todos: tempTodo} 
+        case CHANGE_TEXT:
+            return {...state,input:{text:action.payload.input}}
         default:
             return state
     }
