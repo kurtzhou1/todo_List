@@ -24,13 +24,15 @@ export const reducer =(state=initState,action:any):IState =>{
             const temp_ADD_Todo = state.todos.map(item=>item)
             const todoLength = temp_ADD_Todo.length
             temp_ADD_Todo.push({id:todoLength,toDoList:action.payload.todo,done:false})
-            return {...state,  todos: temp_ADD_Todo} 
+            return {...state, todos: temp_ADD_Todo} 
         case FINISH_TODOLIST:
             const temp_Finish_Todo = state.todos
             temp_Finish_Todo[action.payload.doneNo].done = !temp_Finish_Todo[action.payload.doneNo].done
-            console.log(temp_Finish_Todo)
             return {...state, todos:temp_Finish_Todo}
-        // case REMOVE_TODOLIST:
+        case REMOVE_TODOLIST:
+            const temp_remove_Todo = state.todos.map(item=>item)
+            temp_remove_Todo.splice(action.payload.removeId,1)
+            return {...state, todos:temp_remove_Todo}
         default:
             return state
     }

@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import {CHANGE_TEXT,FINISH_TODOLIST,ADD_TODOLIST,REMOVE_TODOLIST} from '../constants'
 import { useSelector, useDispatch } from 'react-redux';
-import {IState} from '../common/lib'
+import {IState,todos,input} from '../common/lib'
 
 const ToDoList:React.FC<IState> =()=> {
-  const toDoList = useSelector((state:any) => state.todos)
-  const inputText = useSelector((state:any) => state.input.text)
-  
+  const toDoList = useSelector((state:IState) => state.todos)
+  const inputText = useSelector((state:IState) => state.input.text)
+  console.log('toDoList=>>',toDoList)
   const dispatch = useDispatch();
 
   //改變輸入內容
@@ -26,7 +26,7 @@ const ToDoList:React.FC<IState> =()=> {
   };
 
   //是否完成
-  const isDone=(value:boolean)=>{
+  const isDone=(value:number)=>{
     dispatch({
       type: FINISH_TODOLIST,
       payload: { doneNo:value },
@@ -34,19 +34,19 @@ const ToDoList:React.FC<IState> =()=> {
   }
   
   //刪除代辦事項
-  const removeTodoList = ()=>{
+  const removeTodoList = (value:number)=>{
     dispatch({
       type: REMOVE_TODOLIST,
-      payload: { id:id },
+      payload: { removeId:value },
     });
   }
   return (
     <>
     <input value={inputText} onChange={e=>setList(e.target.value)}/>
     <button type='button' onClick={addTodoList}>新增類別</button>
-    <div>{toDoList.map((item:any)=><div><div>NO. {item.id}</div><div>
+    <div>{toDoList.map((item:todos)=><div><div>NO. {item.id}</div><div>
     <input defaultChecked={item.done} type='checkbox' onChange={()=>isDone(item.id)}/><label>isDone</label></div>
-    <div>{item.toDoList}</div><button type='button' onClick={()=>removeTodoList()}>刪除</button></div>)}
+    <div>{item.toDoList}</div><button type='button' onClick={()=>removeTodoList(item.id)}>刪除</button></div>)}
     </div>
     </>
   )
