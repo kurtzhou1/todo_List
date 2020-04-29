@@ -1,9 +1,9 @@
-interface todos{
-    no: number,
+export interface todos{
+    id: number,
     toDoList:string
     done:boolean
 }
-interface input{
+export interface input{
     text: string
 }
 export interface IState {
