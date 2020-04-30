@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import {CHANGE_TEXT,FINISH_TODOLIST,ADD_TODOLIST,REMOVE_TODOLIST} from '../constants'
 import { useSelector, useDispatch } from 'react-redux';
 import {IState,todos,input} from '../common/lib'
+import './scss/styles.scss'
 
 const ToDoList:React.FC<IState> =()=> {
   const toDoList = useSelector((state:IState) => state.todos)
@@ -40,15 +41,21 @@ const ToDoList:React.FC<IState> =()=> {
       payload: { removeId:value },
     });
   }
+  console.log('toDoList=>>',toDoList)
   return (
-    <>
-    <input value={inputText} onChange={e=>setList(e.target.value)}/>
-    <button type='button' onClick={addTodoList}>新增類別</button>
-    <div>{toDoList.map((item:todos)=><div><div>NO. {item.id}</div><div>
-    <input defaultChecked={item.done} type='checkbox' onChange={()=>isDone(item.id)}/><label>isDone</label></div>
-    <div>{item.toDoList}</div><button type='button' onClick={()=>removeTodoList(item.id)}>刪除</button></div>)}
+    <div className="todolist-module">
+      <input className="text_input" value={inputText} onChange={e=>setList(e.target.value)} placeholder='type something'/>
+      <button className="button_input" type='button' onClick={addTodoList}>＋</button>
+        {toDoList.map((item:todos)=>
+        <div className='text_content'>
+          {item.done ? (<div className='idDone'>已完成</div>) : ''}
+          <div className='ID_Wrap'>{item.id}
+          <input defaultChecked={item.done} type='checkbox' onChange={()=>isDone(item.id)}/>
+          </div>
+          <div className='toDoList'>{item.toDoList}</div>
+          <button className='delete_button' type='button' onClick={()=>removeTodoList(item.id)}>刪</button>
+        </div>)}
     </div>
-    </>
   )
 }
 

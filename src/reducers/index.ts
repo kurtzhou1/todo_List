@@ -14,8 +14,6 @@ export const initState:IState ={
 }
 
 export const reducer =(state=initState,action:any):IState =>{
-    // console.log('state=>>>>',state)
-    // console.log('action=>>>>',action)
     switch(action.type){
         //改變輸入內容
         case CHANGE_TEXT:
@@ -30,7 +28,7 @@ export const reducer =(state=initState,action:any):IState =>{
         
         //完成工作
         case FINISH_TODOLIST:
-            const temp_Finish_Todo = state.todos
+            const temp_Finish_Todo = state.todos.map(item=>item)
             temp_Finish_Todo[action.payload.doneNo].done = !temp_Finish_Todo[action.payload.doneNo].done
             return {...state, todos:temp_Finish_Todo}
         
