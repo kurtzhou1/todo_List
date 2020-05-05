@@ -15,5 +15,3 @@ export const App=()=>{
 }
 
 ReactDOM.render(<App />, document.getElementById('root'));
-
-//https://www.pkstep.com/archives/33942
