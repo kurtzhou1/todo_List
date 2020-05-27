@@ -14,6 +14,7 @@ export const initState:IState ={
 }
 
 export const reducer =(state=initState,action:any):IState =>{
+
     switch(action.type){
         //改變輸入內容
         case CHANGE_TEXT:
@@ -34,9 +35,16 @@ export const reducer =(state=initState,action:any):IState =>{
         
         //刪除選項
         case REMOVE_TODOLIST:
-            const temp_remove_Todo = state.todos.map(item=>item)
-            temp_remove_Todo.splice(action.payload.removeId,1)
-            return {...state, todos:temp_remove_Todo}
+            const remove_Finish_Todo = state.todos.map(item=>item)
+            const index = state.todos.find((todo) => {
+                return todo.id === action.payload.removeId
+            });
+            if (index)
+            remove_Finish_Todo.splice(index.id, 1);
+            for (var i = 0; i < remove_Finish_Todo.length; i++) {
+                remove_Finish_Todo[i].id = i;
+            }
+            return {...state, todos:remove_Finish_Todo}
             
         default:
             return state
